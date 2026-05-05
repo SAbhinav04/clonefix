@@ -1,0 +1,34 @@
+# scripts
+
+Just a personal collection of various scripts. No installations or repos to clone—you can run everything here with a single command straight from your terminal.
+
+## How to run them
+
+Depending on the script, you'll either run it via PowerShell or Bash (Linux/macOS). Just copy the execution command provided under the specific script.
+
+**For PowerShell scripts:**
+```powershell
+irm <URL> | iex
+```
+
+**For Bash scripts:**
+```bash
+curl -sL <URL> | bash
+```
+
+**Stopping a script**  
+If you ever need to kill a script while it's running or just want to exit out of a menu, press `Ctrl + C`. This safely aborts the process immediately and brings you back to the command line.
+
+---
+
+## Available Scripts
+
+### 1. vtu-skip (PowerShell)
+A clean, interactive CLI tool that automatically fast-forwards and skips VTU video lectures securely. It tracks your progress and handles playback timing so you don't have to.
+
+**Run it:**
+```powershell
+irm https://13arathp.vercel.app/vtu-skip | iex
+```
+
+*(More scripts coming soon...)*

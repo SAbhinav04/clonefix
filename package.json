@@ -1,0 +1,17 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "Personal collection of various scripts",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'No dev server needed for static files'",
+    "build": "echo 'No build step needed for static files'"
+  },
+  "keywords": [
+    "scripts",
+    "powershell",
+    "bash"
+  ],
+  "author": "",
+  "license": "ISC"
+}

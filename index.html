@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scripts - Personal Collection</title>
+    <meta name="description" content="A personal collection of various scripts. Run commands directly from your terminal.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #000;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #000;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+        
+        .script-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-left: 4px solid #0070f3;
+            background: #f9f9f9;
+        }
+        
+        .run-command {
+            margin: 1rem 0;
+        }
+        
+        a {
+            color: #0070f3;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+    </style>
+    <!-- Counter.dev Analytics -->
+    <script src="https://cdn.counter.dev/script.js" data-id="48b364ab-0c36-4a3a-a010-165c74bbf7d6" data-utcoffset="6"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>scripts</h1>
+        <p>Just a personal collection of various scripts. No installations or repos to clone—you can run everything here with a single command straight from your terminal.</p>
+        
+        <h2>How to run them</h2>
+        <p>Depending on the script, you'll either run it via PowerShell or Bash (Linux/macOS). Just copy the execution command provided under the specific script.</p>
+        
+        <p><strong>For PowerShell scripts:</strong></p>
+        <pre><code>irm &lt;URL&gt; | iex</code></pre>
+        
+        <p><strong>For Bash scripts:</strong></p>
+        <pre><code>curl -sL &lt;URL&gt; | bash</code></pre>
+        
+        <div class="note">
+            <strong>Stopping a script:</strong> If you ever need to kill a script while it's running or just want to exit out of a menu, press <code>Ctrl + C</code>. This safely aborts the process immediately and brings you back to the command line.
+        </div>
+        
+        <h2>Available Scripts</h2>
+        
+        <div class="script-section">
+            <h3>1. vtu-skip (PowerShell)</h3>
+            <p>A clean, interactive CLI tool that automatically fast-forwards and skips VTU video lectures securely. It tracks your progress and handles playback timing so you don't have to.</p>
+            
+            <div class="run-command">
+                <strong>Run it:</strong>
+                <pre><code>irm https://13arathp.vercel.app/vtu-skip | iex</code></pre>
+            </div>
+        </div>
+        
+        <p><em>(More scripts coming soon...)</em></p>
+    </div>
+</body>
+</html>
