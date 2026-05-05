@@ -89,11 +89,13 @@ function Get-UIPad {
 
 function Get-IncompleteCourses {
     param($Enrollments)
-    return $Enrollments | Where-Object {
+    # FIXED: Ensure we always return an array, even if there's only one result
+    $result = @($Enrollments | Where-Object {
         $slug = $_.details.slug
         $progress = if ($null -ne $_.progress_percent) { [double]$_.progress_percent } else { 0 }
         -not [string]::IsNullOrWhiteSpace($slug) -and $progress -lt 100
-    }
+    })
+    return $result
 }
 
 function ConvertFrom-VTUDuration {
@@ -457,6 +459,7 @@ function Invoke-FetchDetails {
     $pad = Get-UIPad
     Write-Host ($pad + $_SEC_COURSE) -ForegroundColor Cyan
     $courseIndex = 0
+    $enrollmentCount = @($Enrollments).Count
     foreach ($e in $Enrollments) {
         $courseIndex++
         $slug = $e.details.slug
@@ -469,7 +472,7 @@ function Invoke-FetchDetails {
         $progressNum = if ($progress -ne '?' -and $null -ne $progress) { [int][double]$progress } else { 0 }
         
         Write-Host ($pad + $_V) -NoNewline -ForegroundColor Cyan
-        Write-Host " [$courseIndex/$($Enrollments.Count)] $titleShort".PadRight(92) -NoNewline -ForegroundColor White
+        Write-Host " [$courseIndex/$enrollmentCount] $titleShort".PadRight(92) -NoNewline -ForegroundColor White
         Write-Host $_V -ForegroundColor Cyan
         
         $course = if ($CourseCache.ContainsKey($slug)) { $CourseCache[$slug] } else { $null }
@@ -580,7 +583,8 @@ function Get-AllCourseData {
     # Fetches course details for every enrollment and returns a hashtable keyed by slug.
     param($Session, $CookieHeader, $Enrollments)
     $map = @{}
-    foreach ($e in $Enrollments) {
+    # FIXED: Ensure we iterate over an array
+    foreach ($e in @($Enrollments)) {
         $slug = $e.details.slug
         if ([string]::IsNullOrWhiteSpace($slug)) { continue }
         try { $map[$slug] = Get-CourseDetails -Session $Session -CookieHeader $CookieHeader -Slug $slug }
@@ -666,8 +670,11 @@ function Invoke-SkipAllCourses {
     Show-Banner
     
     $incompleteCourses = Get-IncompleteCourses -Enrollments $Enrollments
+    # FIXED: Force array count
+    $incompleteCount = @($incompleteCourses).Count
+    $enrollmentCount = @($Enrollments).Count
     
-    if ($incompleteCourses.Count -eq 0) {
+    if ($incompleteCount -eq 0) {
         $pad = Get-UIPad
         Write-Host ''
         Write-Host ($pad + $_TOP) -ForegroundColor Cyan
@@ -683,10 +690,10 @@ function Invoke-SkipAllCourses {
         return
     }
 
-    $completedCount = $Enrollments.Count - $incompleteCourses.Count
+    $completedCount = $enrollmentCount - $incompleteCount
     $pad = Get-UIPad
     Write-Host ''
-    Write-Host ($pad + "  Found $($incompleteCourses.Count) incomplete course(s)") -ForegroundColor Yellow
+    Write-Host ($pad + "  Found $incompleteCount incomplete course(s)") -ForegroundColor Yellow
     Write-Host ($pad + "  Skipping $completedCount already-complete course(s)") -ForegroundColor DarkGray
     Write-Host ''
 
@@ -699,13 +706,14 @@ function Invoke-SkipAllCourses {
     $sw = [System.Diagnostics.Stopwatch]::StartNew()
 
     $courseIndex = 0
-    foreach ($e in $incompleteCourses) {
+    # FIXED: Force array iteration
+    foreach ($e in @($incompleteCourses)) {
         $courseIndex++
         $slug = $e.details.slug
         $title = $e.details.title
         $progress = if ($null -ne $e.progress_percent) { $e.progress_percent } else { '?' }
 
-        Show-CourseHeader $courseIndex $incompleteCourses.Count $title $progress
+        Show-CourseHeader $courseIndex $incompleteCount $title $progress
 
         # Use pre-fetched course data from cache
         $course = if ($CourseCache.ContainsKey($slug)) { $CourseCache[$slug] } else { $null }
@@ -898,4 +906,3 @@ finally {
     }
     catch {}
 }
-
